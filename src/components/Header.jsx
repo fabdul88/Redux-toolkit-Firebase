@@ -7,27 +7,27 @@ const Header = () => {
       <Logo src="/images/logo.svg" />
 
       <NavMenu>
-        <a>
+        <a href="/home">
           <img src="/images/home-icon.svg" alt="" />
           <span>HOME</span>
         </a>
-        <a>
+        <a href="/search">
           <img src="/images/search-icon.svg" alt="" />
           <span>SEARCH</span>
         </a>
-        <a>
+        <a href="/watchlist">
           <img src="/images/watchlist-icon.svg" alt="" />
           <span>WATCHLIST</span>
         </a>
-        <a>
+        <a href="/originals">
           <img src="/images/original-icon.svg" alt="" />
           <span>ORIGINALS</span>
         </a>
-        <a>
+        <a href="/movies">
           <img src="/images/movie-icon.svg" alt="" />
           <span>MOVIES</span>
         </a>
-        <a>
+        <a href="/series">
           <img src="/images/series-icon.svg" alt="" />
           <span>SERIES</span>
         </a>
@@ -43,6 +43,7 @@ const Nav = styled.nav`
   align-items: center;
   padding: 0 36px;
   background: #090b13;
+  overflow: hidden;
 `;
 const Logo = styled.img`
   width: 80px;
@@ -58,8 +59,9 @@ const NavMenu = styled.div`
     display: flex;
     align-items: center;
     padding: 0 12px;
-    // margin: 0 5px;
     cursor: pointer;
+    text-decoration: none;
+    color: #ffffff;
 
     img {
       height: 20px;
