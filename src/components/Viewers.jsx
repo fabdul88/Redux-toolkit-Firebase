@@ -89,6 +89,7 @@ const Wrap = styled.div`
     opacity: 0;
     z-index: 0;
     object-fit: cover;
+    border-radius: 7px;
   }
 
   &:hover {

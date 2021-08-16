@@ -2,30 +2,67 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { ImgSlider } from "./ImgSlider";
 import { Viewers } from "./Viewers";
-import { Movies } from "./Movies";
+import { Recommend } from "./Recommend";
+import { useDispatch, useSelector } from "react-redux";
 import db from "../firebase";
-import { useDispatch } from "react-redux";
+import { selectUserName } from "../features/user/userSlice";
 import { setMovies } from "../features/movie/movieSlice";
+import { NewDisney } from "./NewDisney";
+import { Originals } from "./Originals";
+import { Trending } from "./Trending";
+import { Login } from "./Login";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const userName = useSelector(selectUserName);
+
+  let recommends = [];
+  let newDisneys = [];
+  let originals = [];
+  let trending = [];
 
   useEffect(() => {
     db.collection("movies").onSnapshot((snapshot) => {
-      let tempMovies = snapshot.docs.map((doc) => {
-        // console.log(doc.data());
-        return { id: doc.id, ...doc.data() };
+      snapshot.docs.map((doc) => {
+        switch (doc.data().type) {
+          case "recommend":
+            recommends = [...recommends, { id: doc.id, ...doc.data() }];
+            break;
+          case "new":
+            newDisneys = [...newDisneys, { id: doc.id, ...doc.data() }];
+            break;
+          case "original":
+            originals = [...originals, { id: doc.id, ...doc.data() }];
+            break;
+          case "trending":
+            trending = [...trending, { id: doc.id, ...doc.data() }];
+            break;
+          default:
+            <div />;
+        }
       });
-      dispatch(setMovies(tempMovies));
+      dispatch(
+        setMovies({
+          recommend: recommends,
+          newDisney: newDisneys,
+          original: originals,
+          trending: trending,
+        })
+      );
     });
-  });
+  }, [userName]);
 
-  return (
+  return userName ? (
     <Container>
       <ImgSlider />
       <Viewers />
-      <Movies />
+      <Recommend />
+      <NewDisney />
+      <Originals />
+      <Trending />
     </Container>
+  ) : (
+    <Login />
   );
 };
 

@@ -15,11 +15,11 @@ function App() {
           <Route exact path="/">
             <Login />
           </Route>
-          <Route path="/detail/:id">
-            <Detail />
-          </Route>
           <Route path="/home">
             <Home />
+          </Route>
+          <Route path="/detail/:id">
+            <Detail />
           </Route>
         </Switch>
       </Router>

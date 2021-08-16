@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { auth, provider } from "../firebase";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
@@ -55,7 +55,9 @@ const Header = () => {
 
   return (
     <Nav>
-      <Logo src="/images/logo.svg" />
+      <Link to="/home">
+        <Logo src="/images/logo.svg" />
+      </Link>
       {!userName ? (
         <LoginContainer>
           <Login onClick={handleAuth}>Login</Login>
@@ -107,6 +109,10 @@ const Nav = styled.nav`
   padding: 0 36px;
   background: #090b13;
   overflow: hidden;
+  @media (max-width: 900px) {
+    display: flex;
+    justify-content: space-between;
+  }
 `;
 const Logo = styled.img`
   width: 80px;
@@ -117,6 +123,9 @@ const NavMenu = styled.div`
   flex: 1;
   margin: 0 0 0 25px;
   align-items: center;
+  @media (max-width: 900px) {
+    display: none;
+  }
 
   a {
     display: flex;
@@ -176,6 +185,7 @@ const Dropdown = styled.div`
   letter-spacing: 3px;
   z-index: 5;
   opacity: 0;
+  width: 100px;
 `;
 
 const Login = styled.div`
@@ -219,7 +229,7 @@ const SignOut = styled.div`
   &:hover {
     ${Dropdown} {
       opacity: 1;
-      transition-duration: 1s;
+      transition-duration: 800ms;
     }
   }
 `;
