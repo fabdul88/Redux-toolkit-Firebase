@@ -5,50 +5,57 @@ import db from "../firebase";
 
 function Detail() {
   const { id } = useParams();
-  const [movie, setMovie] = useState({});
+  const [movie, setMovie] = useState();
 
   useEffect(() => {
+    // get movie info from database
     db.collection("movies")
       .doc(id)
       .get()
       .then((doc) => {
         if (doc.exists) {
+          // save movie data
           setMovie(doc.data());
         } else {
           console.log("err");
         }
-      });
+      })
+      .catch((err) => console.log("error: ", err));
   }, [id]);
 
   return (
     <Container>
-      <Background>
-        <img src={movie.backgroundImg} alt="" />
-      </Background>
-      <ImageTitle>
-        <img src={movie.titleImg} alt="" />{" "}
-      </ImageTitle>
-      <Controls>
-        <PlayButton>
-          <img src="/images/play-icon-black.png" alt="" />
-          <span>Play</span>
-        </PlayButton>
-        <TrailerButton>
-          {" "}
-          <img src="/images/play-icon-white.png" alt="" />
-          <span>Trailer</span>
-        </TrailerButton>
-        <AddButton>
-          {" "}
-          <span>+</span>
-        </AddButton>
-        <GroupWatchButton>
-          {" "}
-          <img src="/images/group-icon.png" alt="" />
-        </GroupWatchButton>
-      </Controls>
-      <SubTitle>{movie.subTitle}</SubTitle>
-      <Description>{movie.description}</Description>
+      {movie && (
+        <>
+          <Background>
+            <img src={movie.backgroundImg} alt="" />
+          </Background>
+          <ImageTitle>
+            <img src={movie.titleImg} alt="" />{" "}
+          </ImageTitle>
+          <Controls>
+            <PlayButton>
+              <img src="/images/play-icon-black.png" alt="" />
+              <span>Play</span>
+            </PlayButton>
+            <TrailerButton>
+              {" "}
+              <img src="/images/play-icon-white.png" alt="" />
+              <span>Trailer</span>
+            </TrailerButton>
+            <AddButton>
+              {" "}
+              <span>+</span>
+            </AddButton>
+            <GroupWatchButton>
+              {" "}
+              <img src="/images/group-icon.png" alt="" />
+            </GroupWatchButton>
+          </Controls>
+          <SubTitle>{movie.subTitle}</SubTitle>
+          <Description>{movie.description}</Description>
+        </>
+      )}
     </Container>
   );
 }
